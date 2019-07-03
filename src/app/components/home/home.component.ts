@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit {
       position: [''],
       bmi: [''],
       name: [''],
+      color: [''],
       wight: ['', Validators.required],
       height: ['', Validators.required]
     });
@@ -63,23 +64,30 @@ export class HomeComponent implements OnInit {
       this.bmi = price.toFixed(2);
       this.angForm.controls['bmi'].setValue(this.bmi);
       this.angForm.controls['position'].setValue(ELEMENT_DATA.length + 1);
-      ELEMENT_DATA.push(this.angForm.value);
+
       console.log("invalid", this.angForm.invalid);
       if (this.bmi < 18.5) {
         this.type = 'น้ำหนักน้อยมาตรฐาน';
+        this.angForm.controls['color'].setValue('brown');
       }
       else if (this.bmi >= 18.5 && this.bmi <= 22.9) {
         this.type = 'ปกติ';
+        this.angForm.controls['color'].setValue('green');
       }
       else if (this.bmi > 23 && this.bmi <= 24.9) {
         this.type = 'อ้วนระดับ 1';
+        this.angForm.controls['color'].setValue('aqua');
+
       }
       else if (this.bmi > 25 && this.bmi <= 29.9) {
         this.type = 'อ้วนระดับ 2';
+        this.angForm.controls['color'].setValue('blue');
       }
       else if (this.bmi > 30) {
         this.type = 'อ้วนระดับ 3';
+        this.angForm.controls['color'].setValue('blue');
       }
+      ELEMENT_DATA.push(this.angForm.value);
       this.dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
       const dialogRef = this.dialog.open(DialogComponent, {
@@ -126,16 +134,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  clickDelete(position: number){
+  clickDelete(position: number) {
     for (let index = 0; index < ELEMENT_DATA.length; index++) {
-      if(ELEMENT_DATA[index]["position"] == position){
+      if (ELEMENT_DATA[index]["position"] == position) {
         ELEMENT_DATA.splice(index, 1);
       }
     }
     // delete ELEMENT_DATA[position-1];
     this.dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-    
-    
+
+
   }
 
 
@@ -150,5 +158,5 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  
+
 ];

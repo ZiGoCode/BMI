@@ -81,7 +81,7 @@
 
       <ng-container matColumnDef="bmi">
         <th mat-header-cell *matHeaderCellDef> BMI </th>
-        <td mat-cell *matCellDef="let element"> {{element.bmi}} </td>
+        <td class="text-{{element.color}}" mat-cell *matCellDef="let element"> {{element.bmi}} </td>
       </ng-container>
 
       <ng-container matColumnDef="button">
