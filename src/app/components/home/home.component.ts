@@ -98,10 +98,10 @@ export class HomeComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
       });
-
       this.angForm.setValue({
         position: [''],
         bmi: [''],
+        color: [''],
         name: ['', Validators.required],
         wight: ['', Validators.required],
         height: ['', Validators.required]
