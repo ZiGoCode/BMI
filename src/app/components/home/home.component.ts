@@ -5,11 +5,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { EditComponent } from '../edit/edit.component';
+import { PeriodicElement } from './home.interface';
+import { ServiceService } from 'src/app/service.service';
 
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+// export interface DialogData {
+//   animal: string;
+//   name: string;
+// }
 
 
 @Component({
@@ -25,6 +27,7 @@ export class HomeComponent implements OnInit {
   mname: string
   type: string;
   name: string;
+  newBMI: any;
 
   displayedColumns: string[] = ['name', 'weight', 'symbol', 'bmi', 'button'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
@@ -32,7 +35,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private sbmi: ServiceService) {
     this.createForm();
   }
 
@@ -65,7 +69,9 @@ export class HomeComponent implements OnInit {
       this.angForm.controls['bmi'].setValue(this.bmi);
       this.angForm.controls['position'].setValue(ELEMENT_DATA.length + 1);
 
-      console.log("invalid", this.angForm.invalid);
+      this.newBMI = this.sbmi.compute(this.angForm.value.wight, h, this.bmi);
+      console.log("BMI", this.newBMI);
+
       if (this.bmi < 18.5) {
         this.type = 'น้ำหนักน้อยมาตรฐาน';
         this.angForm.controls['color'].setValue('brown');
@@ -92,7 +98,7 @@ export class HomeComponent implements OnInit {
 
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '450px',
-        data: { name: this.angForm.value.name, type: this.type, bmi: this.bmi }
+        data: { name: this.angForm.value.name, type: this.type, bmi: this.bmi, newBMI: this.newBMI }
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -149,13 +155,13 @@ export class HomeComponent implements OnInit {
 
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  wight: number;
-  height: number;
-  bmi: number;
-}
+// export interface PeriodicElement {
+//   name: string;
+//   position: number;
+//   wight: number;
+//   height: number;
+//   bmi: number;
+// }
 
 const ELEMENT_DATA: PeriodicElement[] = [
 

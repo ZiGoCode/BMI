@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { EditComponent } from './components/edit/edit.component';
+import { ServiceService } from './service.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { EditComponent } from './components/edit/edit.component';
     DialogComponent,
     EditComponent
   ],
-  providers: [],
+  providers: [ServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
